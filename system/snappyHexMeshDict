@@ -1,0 +1,157 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// use this to debug each step
+castellatedMesh true;
+snap            false;
+addLayers       false;
+
+// https://www.openfoam.com/documentation/guides/latest/doc/guide-meshing-snappyhexmesh.html
+geometry
+{
+    mySurface.stl 
+    {
+        type triSurfaceMesh;
+        name mySurface;    // name of the patch in polyMesh
+    }
+
+    box
+    {
+        type searchableBox;
+        min (-1000 -1000 0.9);
+        max (1000 1000 1.1);
+    }
+};
+
+castellatedMeshControls
+{
+    maxLocalCells       1000000;
+    maxGlobalCells      20000000;
+    minRefinementCells  0;
+    maxLoadUnbalance    0.10;
+    nCellsBetweenLevels 1;          // Number of subdivision between two refinement levels
+
+    allowFreeStandingZoneFaces true;
+    resolveFeatureAngle 30;
+
+    features
+    (
+    );
+    
+    refinementSurfaces
+    {  
+        mySurface
+        {
+            level (0 0);    // Subdivide mesh (min max) or keep both the same
+        }
+    }
+    
+    refinementRegions
+    {
+        // mySurface
+        // {
+        //     mode    distance;
+        //     levels  ((0.05 2) (0.1 1));
+        // }
+        // box 
+        // {
+        //     mode    inside;
+        //     levels  ((0 2));  // first entry ignored
+        // }
+    }
+    
+    locationInMesh (-0.999 0.001 0.001);   // change this if domain changes
+}
+
+
+snapControls
+{
+    nSmoothPatch    0;      // Smoothing BEFORE snapping 
+    tolerance       4.0;    // Max (relative) distance to surface for snapping
+    nSolveIter      30;     // Smoothing AFTER snapping 
+    nRelaxIter      5;     // Increase this value to improve the quality of the body fitted mesh
+
+    nFeatureSnapIter 10;
+    implicitFeatureSnap false;
+    explicitFeatureSnap true;
+    multiRegionFeatureSnap false;
+}
+
+addLayersControls
+{
+    // Layer thickness specification. This can be specified in one of following ways:
+    // 1. firstLayerThickness and thickness (overall thickness)
+    // 2. firstLayerThickness and expansionRatio
+    // 3. finalLayerThickness and expansionRatio
+    // 4. finalLayerThickness and thickness (overall thickness)
+    // 5. thickness (overall thickness) and expansionRatio
+    relativeSizes       true;
+    finalLayerThickness 0.3;
+    expansionRatio      1.2;
+    minThickness        0.01;
+
+    layers
+    {
+        mySurface
+        {
+            nSurfaceLayers 1;
+        }
+    }
+
+    nGrow 0;
+    featureAngle 130;
+    nRelaxIter 10;
+    nSmoothSurfaceNormals 1;
+    nSmoothNormals 3;
+    nSmoothThickness 10;
+    minMedialAxisAngle 90;
+    maxFaceThicknessRatio 0.5;
+    maxThicknessToMedialRatio 0.3;
+    minMedianAxisAngle 90;
+    nBufferCellsNoExtrude 0;
+    nLayerIter 50;
+    nRelaxedIter 20;
+}
+
+meshQualityControls
+{
+    maxNonOrtho 65;
+    maxBoundarySkewness 20;
+    maxInternalSkewness 4;
+    maxConcave 80;
+    minVol 1e-200;
+    minTetQuality 1e-9;
+    minArea -1;
+    minTwist 0.05;
+    minDeterminant 0.001;
+    minFaceWeight 0.05;
+    minVolRatio 0.01;
+    minTriangleTwist -1;
+
+    nSmoothScale 4;
+    errorReduction 0.75;
+
+    relaxed
+    {
+        maxNonOrtho 75;
+    }
+}
+
+debug 0;
+mergeTolerance 1e-6;
+// mergeTolerance 0.002;
+
+// ************************************************************************* //

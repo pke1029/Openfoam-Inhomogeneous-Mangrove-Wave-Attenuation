@@ -1,2 +1,2 @@
-# BlockTool
-Python library for creating blockMeshDict file for OpenFOAM
+# Openfoam Inhomogeneous Mangrove Wave Attenuation 
+

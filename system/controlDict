@@ -1,0 +1,109 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     interFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         20.0;
+
+deltaT          0.001;
+
+writeControl    adjustable;
+
+writeInterval   0.1;
+
+purgeWrite      0;
+
+writeFormat     binary;     // ascii or binary
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable yes;
+
+adjustTimeStep  on;
+
+maxCo           0.5;
+
+maxAlphaCo      0.2;
+
+maxDeltaT       0.025;
+
+functions
+{
+
+    // interfaceHeight1
+    // {
+    //     // Mandatory entries (unmodifiable)
+    //     type            interfaceHeight;
+    //     libs            (fieldFunctionObjects);
+
+    //     // Mandatory entries (runtime modifiable)
+    //     locations       ((0.001 0 0) (1.001 0 0));
+
+    //     // Optional entries (runtime modifiable)
+    //     alpha           alpha.water;
+    //     liquid          true;
+    //     direction       (0 0 1);
+    //     interpolationScheme    cellPoint;
+
+    //     // Optional (inherited) entries
+    //     writePrecision  8;
+    //     writeToFile     true;
+    //     enabled         true;
+    //     log             true;
+    //     timeStart       $startTime;
+    //     timeEnd         $endTime;
+    //     executeControl  timeStep;
+    //     executeInterval 1;
+    //     writeControl    timeStep;
+    //     writeInterval   1;
+    // }
+
+    // dragForce
+    // {
+    //     // mandatory entries
+    //     type            forces;     // https://www.openfoam.com/documentation/guides/latest/doc/guide-fos-forces-forces.html
+    //     libs            (forces);
+
+    //     // optional entries
+    //     patches         (mySurface);
+    //     CofR            (0 0 0);    // center of rotation (for moment calculation)
+    //     rhoInf          1000;     // redundant for incompressible
+
+    //     // administrative entries
+    //     enabled         true;       // enable this function object
+    //     log             false;      // print result to terminal
+    //     executeControl  timeStep;   // when to execute
+    //     executeInterval 1;          // how often to execute
+    //     writeControl    timeStep;   // when to write 
+    //     writeInterval   1;          // how often to write
+    // }
+}
+
+
+
+// ************************************************************************* //

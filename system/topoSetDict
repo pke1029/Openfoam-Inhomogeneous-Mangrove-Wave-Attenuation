@@ -1,0 +1,66 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2412                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      topoSetDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+water_level 0.6;
+
+actions
+(
+    {
+        name    interface_region1;
+        type    cellSet;
+        action  new;
+        source  boxToCell;
+        sourceInfo
+        {
+            box ( -1000 -1000 #eval{$water_level-0.14} ) ( 1000 1000 #eval{$water_level+0.1} );
+        }
+    }
+
+    {
+        name    interface_region2;
+        type    cellSet;
+        action  new;
+        source  boxToCell;
+        sourceInfo
+        {
+            box ( -1000 -1000 #eval{$water_level-0.1} ) ( 1000 1000 #eval{$water_level+0.1} );
+        }
+    }
+
+    {
+        name    interface_region1;
+        type    cellSet;
+        action  add;
+        source  boxToCell;
+        sourceInfo
+        {
+            box ( -1000 -1000 0 ) ( 1000 1000 0.02 );
+        }
+    }
+
+    {
+        name    interface_region2;
+        type    cellSet;
+        action  add;
+        source  boxToCell;
+        sourceInfo
+        {
+            box ( -1000 -1000 0 ) ( 1000 1000 0.01 );
+        }
+    }
+);
+
+// ************************************************************************* //
