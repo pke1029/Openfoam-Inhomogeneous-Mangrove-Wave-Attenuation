@@ -1,6 +1,6 @@
 # Openfoam Inhomogeneous Mangrove Wave Attenuation 
 
-This case simulates wave attenuation across inhomogeneous vegetation such as a mangrove forest. You may find more information on this work at https://arxiv.org/abs/2606.11653. The mesh is generated using a python library that I develop. You can find the `blocktool.py` file in the `system` folder. It work with the `blockMesh` utility in OpenFOAM to generate high quality mesh for the simulations.  
+This case simulates wave attenuation across inhomogeneous vegetation such as a mangrove forest (idealized as arrays of cylinders with height following an [exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution)). You may find more information on this work at https://arxiv.org/abs/2606.11653. The mesh is generated using a custom python library (You can find the `blocktool.py` file in the `system` folder).  
 
 ![Mesh](mesh.png)
 
