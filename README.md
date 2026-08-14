@@ -20,8 +20,10 @@ Pang, K.E., & Tay, Z.Y. (2026). On the Modelling of the Hydrodynamic Drag of Man
 make run-mesh
 ```
 This calls the `getBlockMeshDict.py` to generate a `blockMeshDict` file and a `mySurface.stl` (which contains the cylinders). Then `blockMesh`, `refineMesh`, and `snappyHexMesh` is used to create the simulation mesh.  
+
 2. Run the simulation
-You may set the number of cores you wish to run the simulation with in the `Makefile`. The start the simulations with 
+
+You may set the number of cores you wish to run the simulation with in the `Makefile`. Then start the simulations with 
 ```
 make run-sim
 ```
